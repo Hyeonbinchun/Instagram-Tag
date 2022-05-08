@@ -1,3 +1,3 @@
 # pizza
 
-this i my first personal project
+this is my first personal project
