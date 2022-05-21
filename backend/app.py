@@ -1,7 +1,9 @@
 import json
 from flask import Flask
 from flask_cors import CORS
-from pymongo import MongoClient
+import pymongo
+import certifi
+# from pymongo import MongoClient
 from bson.objectid import ObjectId
 
 class JSONEncoder(json.JSONEncoder):
@@ -17,7 +19,8 @@ class JSONEncoder(json.JSONEncoder):
             return str(o)
         return json.JSONEncoder.default(self, o)
 
-client = MongoClient('localhost', 27017, username='username', password='password')
+# client = MongoClient('localhost', 27017, username='username', password='password')
+client = pymongo.MongoClient("mongodb+srv://admin:password123!@cluster0.s2yij.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", tlsCAFile=certifi.where())
 
 def create_app():
     """ Creates and initializes a Flask object to be used
@@ -25,6 +28,7 @@ def create_app():
 
     app = Flask(__name__)
     # configure_mongo_uri(app)
+    print('Connecting DB')
     CORS(app, supports_credentials=True)
     app.json_encoder = JSONEncoder
     register_blueprints(app)
@@ -38,15 +42,17 @@ def register_blueprints(app):
     """
 
     from api.sample import sample
+    from api.user import user
 
 
     print("Registering blueprints into app.")
 
     app.register_blueprint(sample)
+    app.register_blueprint(user)
 
     return app
 
 
 if __name__ == '__main__':
     app = create_app()
-    app.run()
+    app.run(host='0.0.0.0')
