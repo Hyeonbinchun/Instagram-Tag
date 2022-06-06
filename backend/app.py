@@ -5,6 +5,8 @@ import pymongo
 import certifi
 # from pymongo import MongoClient
 from bson.objectid import ObjectId
+import datetime
+
 
 class JSONEncoder(json.JSONEncoder):
     """ extend json-encoder class 
@@ -42,13 +44,15 @@ def register_blueprints(app):
     """
 
     from api.sample import sample
-    from api.user import user
+    # from api.user import user
+    from api.project import project
 
 
     print("Registering blueprints into app.")
 
     app.register_blueprint(sample)
-    app.register_blueprint(user)
+    # app.register_blueprint(user)
+    app.register_blueprint(project)
 
     return app
 
