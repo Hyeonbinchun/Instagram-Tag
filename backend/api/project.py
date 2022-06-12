@@ -10,6 +10,8 @@ import os
 import cloudinary
 # import cloudinary.uploader
 from cloudinary import uploader
+from bson.objectid import ObjectId
+
 load_dotenv()
 
 project = Blueprint("user", __name__)  # initialize blueprint
@@ -87,3 +89,38 @@ def get_tags():
     return {
         "msg": "success"
     }
+
+
+@project.route("/api/tags", methods=["GET"])
+def get_image():
+    user_data = request.get_json()
+    objInstance = ObjectId(user_data['_id'])
+    image = db.images.find_one(objInstance)
+    return {
+        "msg": "Success",
+        "data": image
+    }
+
+@project.route("/api/tags", methods=["DELETE"])
+def delete_image():
+    # delete by searching for username
+    user_data = request.get_json()
+    objInstance = ObjectId(user_data['_id'])
+    objInstance2 = {"_id": objInstance}
+    db.images.delete_one(objInstance2)
+    return {
+        "msg": "Successfully deleted",
+    }
+
+@project.route("/api/tags/custom", methods=["POST"])
+def add_custom_tag():
+
+    # 1. Get id and custom tags from json
+
+    # 2. Using id, get original tags ([tag1, tag2, tag3, ...])
+
+    # 3. Append new custom tag to the list
+
+    # 4. Using update_one, update document with given id and update new tags with new list
+
+    pass
