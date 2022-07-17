@@ -5,6 +5,9 @@ import datetime
 user = Blueprint("user", __name__)  # initialize blueprint
 db = client.pizza
 
+"""
+This is for practice
+"""
 
 # function that is called when you visit /
 @user.route("/api/user/create", methods=["POST"])
