@@ -1,4 +1,4 @@
-# Pizza Backend
+# Backend
 
 ## Notes:
 
